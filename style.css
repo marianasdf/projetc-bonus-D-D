@@ -3,10 +3,6 @@
   padding: 0;
 }
 
-.header-container {
-  background-color: darkgray;
-}
-
 .main-container {
   display: flex;
   background-image: url("./img/main-image.png");
