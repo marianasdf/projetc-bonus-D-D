@@ -11,6 +11,19 @@
   align-items: center;
 }
 
+.card-container {
+  display: flex;
+  margin: 15px;
+  justify-content: space-around;
+}
+
+.img-fluid {
+  margin-top: 20px;
+  border: solid 1px black;
+  border-radius: 2px;
+}
+
+
 #h1Fonte {
   font-family: fantasy;
   color: aliceblue;
