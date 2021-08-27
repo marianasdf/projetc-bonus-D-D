@@ -36,6 +36,14 @@ footer h4 {
   font-size: 20px;
 }
 
+.title-page {
+  font-size: 20px;
+}
+
+.class-img {
+  width: 200px;
+}
+
 .infoContainer {
   display: flex;
   justify-content: space-between;

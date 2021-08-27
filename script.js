@@ -19,11 +19,13 @@ function getTarget () {
     const section = document.createElement('section');
     section.className = 'row col-md-8 offset-md-2';
     const p = document.createElement('p');
+    p.className = 'title-page'
     p.innerText = event.target.innerText;
     const img = document.createElement('img');
+    img.className = 'class-img'
     img.src = `img/${event.target.innerText}.png`;
-    section.appendChild(img);
     section.appendChild(p);
+    section.appendChild(img);
     mainSection.appendChild(section);
   })
 }
