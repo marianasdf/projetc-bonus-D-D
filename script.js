@@ -5,17 +5,27 @@ $(document).ready(function () {
   });
 });
 
-const listClasses = ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard'];
-
 const buscaSpell = async () => {
   const result = await fetch(`https://www.dnd5eapi.co/api/classes/${getTarget()}/spells`);
   return (await result.json()).results;
 }
-console.log(buscaSpell());
 
-function getTarget (event) {
-  const anchor = document.getElementsByClassName('dropdown-item');
-  
+
+function getTarget () {
+  const anchor = document.querySelector('.dropdown-menu');
+  anchor.addEventListener('click', (event) => {
+    const mainSection = document.querySelector('.content-main');
+    mainSection.innerHTML = '';
+    const section = document.createElement('section');
+    section.className = 'row col-md-8 offset-md-2';
+    const p = document.createElement('p');
+    p.innerText = event.target.innerText;
+    const img = document.createElement('img');
+    img.src = `img/${event.target.innerText}.png`;
+    section.appendChild(img);
+    section.appendChild(p);
+    mainSection.appendChild(section);
+  })
 }
 
 const buscaClasses = async () => {
@@ -41,4 +51,5 @@ const montaListaDeClasses = async () => {
 window.onload = async () => {
   await montaListaDeClasses();
   await buscaSpell();
+  getTarget();
 }
