@@ -5,11 +5,28 @@ $(document).ready(function () {
   });
 });
 
-const buscaSpell = async () => {
-  const result = await fetch(`https://www.dnd5eapi.co/api/classes/${getTarget()}/spells`);
-  return (await result.json()).results;
+function buscaClasse () {
+  const classe = document.querySelector('.dropdown-menu');
+  classe.addEventListener('click', (event) => {
+    buscaDataClass(event.target.innerText);
+  })
 }
 
+const buscaDataClass = async (classe) => {
+  const result = await fetch(`https://www.dnd5eapi.co/api/classes/${classe.toLowerCase()}`);
+  const { proficiencies } = await result.json();
+  const mainSection = document.querySelector('.content-main');
+  const p = document.createElement('p');
+  p.innerText = 'Proeficiencias';
+  mainSection.appendChild(p);
+  const ul = document.createElement('ul');
+  proficiencies.forEach((element) => {
+    const li = document.createElement('li');
+    li.innerText = element.name;
+    ul.appendChild(li);
+  })
+  mainSection.appendChild(ul);
+}
 
 function getTarget () {
   const anchor = document.querySelector('.dropdown-menu');
@@ -22,7 +39,7 @@ function getTarget () {
     p.className = 'title-page'
     p.innerText = event.target.innerText;
     const img = document.createElement('img');
-    img.className = 'class-img'
+    img.className = 'class-img float-end'
     img.src = `img/${event.target.innerText}.png`;
     section.appendChild(p);
     section.appendChild(img);
@@ -52,6 +69,6 @@ const montaListaDeClasses = async () => {
 
 window.onload = async () => {
   await montaListaDeClasses();
-  await buscaSpell();
+  buscaClasse();
   getTarget();
 }

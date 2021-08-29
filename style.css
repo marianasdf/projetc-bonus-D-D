@@ -30,6 +30,9 @@ header {
 footer {
   background-color: lightgrey;
   padding: 10px;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
 }
 
 footer h4 {
@@ -42,6 +45,7 @@ footer h4 {
 
 .class-img {
   width: 200px;
+  height: 200px;
 }
 
 .infoContainer {
