@@ -5,7 +5,8 @@ $(document).ready(function () {
   });
 });
 
-function buscaClasse () {
+
+function buscaClasse() {
   const classe = document.querySelector('.dropdown-menu');
   classe.addEventListener('click', (event) => {
     buscaDataClass(event.target.innerText);
@@ -14,36 +15,50 @@ function buscaClasse () {
 
 const buscaDataClass = async (classe) => {
   const result = await fetch(`https://www.dnd5eapi.co/api/classes/${classe.toLowerCase()}`);
-  const { proficiencies } = await result.json();
-  const mainSection = document.querySelector('.content-main');
-  const p = document.createElement('p');
-  p.innerText = 'Proeficiencias';
-  mainSection.appendChild(p);
+  const { proficiencies, subclasses } = await result.json();
+  const rowId = document.getElementById('row-id')
+  const divProeficiencia = document.createElement('div');
+  divProeficiencia.className = 'col-sm'
+  const divSubClasses = document.createElement('div')
+  divSubClasses.className = 'col-sm'
+  divProeficiencia.innerText = 'Proeficiencias';
+  divSubClasses.innerText = 'Subclasses'
+  rowId.appendChild(divProeficiencia);
+  rowId.appendChild(divSubClasses);
   const ul = document.createElement('ul');
+  const ulSubClasses = document.createElement('ul');
   proficiencies.forEach((element) => {
     const li = document.createElement('li');
     li.innerText = element.name;
     ul.appendChild(li);
   })
-  mainSection.appendChild(ul);
+  subclasses.forEach((element) => {
+    const li = document.createElement('li');
+    li.innerText = element.name;
+    ulSubClasses.appendChild(li);
+  })
+  divSubClasses.appendChild(ulSubClasses);
+  divProeficiencia.appendChild(ul);
 }
 
-function getTarget () {
+function getTarget() {
   const anchor = document.querySelector('.dropdown-menu');
   anchor.addEventListener('click', (event) => {
-    const mainSection = document.querySelector('.content-main');
-    mainSection.innerHTML = '';
-    const section = document.createElement('section');
-    section.className = 'row col-md-8 offset-md-2';
+    const classeDescricao = document.getElementById('row-id')
+    classeDescricao.innerHTML = '';
+    classeDescricao.classList.remove('d-none')
+    document.getElementById('container-conteudo').classList.add('d-none')
+    const section = document.createElement('div');
+    section.className = 'col-sm'
     const p = document.createElement('p');
     p.className = 'title-page'
     p.innerText = event.target.innerText;
     const img = document.createElement('img');
-    img.className = 'class-img float-end'
+    img.className = 'class-img'
     img.src = `img/${event.target.innerText}.png`;
     section.appendChild(p);
     section.appendChild(img);
-    mainSection.appendChild(section);
+    classeDescricao.appendChild(section);
   })
 }
 
@@ -71,4 +86,5 @@ window.onload = async () => {
   await montaListaDeClasses();
   buscaClasse();
   getTarget();
+
 }
